@@ -9,7 +9,7 @@ My fork of Artem Shuba's Colibri UWP App.
 
 - Exception "8:Invalid request: versions below 5.81 are deprecated" fixed (I set vk version to 5.82).
 - Min. os. win build downdraded to 10240 for better Astoria compatibility :)
-- Tested (a little) at Lumia 960 DualSim. All seems to be ok, over 7 (!) years. Artem is genious :)
+- Tested (a little) at my Lumias (950, 640 DS and 640 with Astoria). All seems to be ok, over 7 (!) years. Artem is genious :)
 
 ## References
 - https://github.com/artemshuba/ Great C# Developer
