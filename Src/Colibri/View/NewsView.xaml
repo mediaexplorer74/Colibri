@@ -4,8 +4,34 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Colibri.View.Controls"
+    xmlns:conv="using:Colibri.Converters"
     mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock Text="News (placeholder)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Новости" Margin="12,12,12,0" FontSize="18" FontWeight="SemiBold"/>
+
+        <Grid Grid.Row="1">
+            <ProgressRing IsActive="{Binding IsLoading}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,16,0,0"/>
+            <TextBlock Text="{Binding Error}" Foreground="Red" Margin="12,40,12,12" TextWrapping="Wrap" Visibility="{Binding Error, Converter={StaticResource IsEmptyToVisibilityConverter}}"/>
+            <RefreshContainer Margin="0,0,0,0" RefreshRequested="RefreshRequested">
+                <ListView x:Name="PostsList" ItemsSource="{Binding Posts}" SelectionMode="None" Loaded="PostsList_Loaded">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <controls:AudioPostControl />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.Footer>
+                        <StackPanel Padding="0,8,0,16" HorizontalAlignment="Center">
+                            <ProgressRing IsActive="{Binding IsLoading}" Width="24" Height="24"/>
+                        </StackPanel>
+                    </ListView.Footer>
+                </ListView>
+            </RefreshContainer>
+        </Grid>
     </Grid>
 </Page>

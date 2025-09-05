@@ -22,5 +22,7 @@ namespace Colibri.Services
         public static AudioService AudioService { get; } = new AudioService();
 
         public static UserPresenceService UserPresenceService { get; } = new UserPresenceService(Vkontakte);
+
+        public static FeedService FeedService { get; } = new FeedService(Vkontakte);
     }
 }

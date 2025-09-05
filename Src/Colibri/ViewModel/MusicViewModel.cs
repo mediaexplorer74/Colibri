@@ -5,6 +5,8 @@ using Colibri.Services;
 using GalaSoft.MvvmLight.Command;
 using Jupiter.Mvvm;
 using VkLib.Core.Audio;
+using System.Collections.Generic;
+using Colibri.Model;
 
 namespace Colibri.ViewModel
 {
@@ -12,6 +14,7 @@ namespace Colibri.ViewModel
     {
         public ObservableCollection<VkAudio> MyMusic { get; } = new ObservableCollection<VkAudio>();
         public ObservableCollection<VkAudio> Popular { get; } = new ObservableCollection<VkAudio>();
+        public ObservableCollection<AudioPost> FeedPosts { get; } = new ObservableCollection<AudioPost>();
 
         private bool _isLoadingMy;
         public bool IsLoadingMy { get => _isLoadingMy; set => Set(ref _isLoadingMy, value); }
@@ -19,19 +22,30 @@ namespace Colibri.ViewModel
         private bool _isLoadingPopular;
         public bool IsLoadingPopular { get => _isLoadingPopular; set => Set(ref _isLoadingPopular, value); }
 
+        private bool _isLoadingFeed;
+        public bool IsLoadingFeed { get => _isLoadingFeed; set => Set(ref _isLoadingFeed, value); }
+
         private string _errorMy;
         public string ErrorMy { get => _errorMy; set => Set(ref _errorMy, value); }
 
         private string _errorPopular;
         public string ErrorPopular { get => _errorPopular; set => Set(ref _errorPopular, value); }
 
+        private string _errorFeed;
+        public string ErrorFeed { get => _errorFeed; set => Set(ref _errorFeed, value); }
+
+        private string _feedNextFrom;
+        public string FeedNextFrom { get => _feedNextFrom; set => Set(ref _feedNextFrom, value); }
+
         public RelayCommand RefreshMyCommand { get; private set; }
         public RelayCommand RefreshPopularCommand { get; private set; }
+        public RelayCommand RefreshFeedCommand { get; private set; }
 
         public MusicViewModel()
         {
             RefreshMyCommand = new RelayCommand(async () => await LoadMyMusicAsync(true));
             RefreshPopularCommand = new RelayCommand(async () => await LoadPopularAsync(true));
+            RefreshFeedCommand = new RelayCommand(async () => await LoadFeedAsync(true));
         }
 
         public async Task EnsureMyMusicLoadedAsync()
@@ -44,6 +58,12 @@ namespace Colibri.ViewModel
         {
             if (Popular.Count == 0 && !IsLoadingPopular)
                 await LoadPopularAsync(false);
+        }
+
+        public async Task EnsureFeedLoadedAsync()
+        {
+            if (FeedPosts.Count == 0 && !IsLoadingFeed)
+                await LoadFeedAsync(false);
         }
 
         private async Task LoadMyMusicAsync(bool force)
@@ -95,6 +115,39 @@ namespace Colibri.ViewModel
             finally
             {
                 IsLoadingPopular = false;
+            }
+        }
+
+        public async Task LoadFeedAsync(bool force)
+        {
+            if (IsLoadingFeed)
+                return;
+            IsLoadingFeed = true;
+            ErrorFeed = null;
+            try
+            {
+                // For refresh, reset paging and clear list
+                if (force)
+                    FeedNextFrom = null;
+
+                var result = await ServiceLocator.FeedService.GetNewsAsync(count: 50, nextFrom: FeedNextFrom);
+                if (force)
+                    FeedPosts.Clear();
+
+                if (result?.Posts != null)
+                {
+                    foreach (var p in result.Posts)
+                        FeedPosts.Add(p);
+                }
+                FeedNextFrom = result?.NextFrom;
+            }
+            catch (Exception ex)
+            {
+                ErrorFeed = ex.Message;
+            }
+            finally
+            {
+                IsLoadingFeed = false;
             }
         }
     }

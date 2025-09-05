@@ -1,0 +1,64 @@
+<UserControl
+    x:Class="Colibri.View.Controls.AudioPostControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:conv="using:Colibri.Converters"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="430">
+
+    <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" CornerRadius="6" Padding="10" Margin="8,6" >
+        <StackPanel>
+            <!-- Header: Avatar, Author, Date -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Width="40" Height="40" CornerRadius="20">
+                    <Border.Background>
+                        <ImageBrush ImageSource="{Binding Author.PhotoMedium}"/>
+                    </Border.Background>
+                </Border>
+                <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                    <Button Style="{StaticResource TextBlockButtonStyle}" Click="Author_Click">
+                        <TextBlock Text="{Binding Author.Name}" FontWeight="SemiBold"/>
+                    </Button>
+                    <Button Style="{StaticResource TextBlockButtonStyle}" Click="Date_Click">
+                        <TextBlock Text="{Binding Date, Converter={StaticResource PostTimeConverter}}" Opacity="0.6" FontSize="12"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <!-- Text -->
+            <TextBlock Text="{Binding Text}" TextWrapping="Wrap" Margin="0,8,0,0" Visibility="{Binding Text, Converter={StaticResource IsEmptyToVisibilityConverter}}"/>
+
+            <!-- Image preview -->
+            <Grid Margin="0,8,0,0" Visibility="{Binding ImageUri, Converter={StaticResource IsEmptyToVisibilityConverter}}">
+                <Rectangle Fill="{ThemeResource SystemControlBackgroundBaseLowBrush}" Height="200"/>
+                <Image Source="{Binding ImageUri}" Height="200" Stretch="UniformToFill"/>
+            </Grid>
+
+            <!-- Tracks list -->
+            <ListView x:Name="TracksList" ItemsSource="{Binding Tracks}" IsItemClickEnabled="True" SelectionMode="None" ItemClick="TracksList_ItemClick" Margin="-6,8,-6,0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="6,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Title}"/>
+                                <TextBlock Text="{Binding Artist}" Opacity="0.7" FontSize="12"/>
+                            </StackPanel>
+                            <TextBlock Grid.Column="1" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Opacity="0.7" Margin="8,0,0,0"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+    </Border>
+</UserControl>

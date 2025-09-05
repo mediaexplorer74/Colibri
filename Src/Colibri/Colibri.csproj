@@ -1754,6 +1754,9 @@
     <Compile Include="Controls\MessageForwardedMessageControl.xaml.cs">
       <DependentUpon>MessageForwardedMessageControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\AudioPostControl.xaml.cs">
+      <DependentUpon>AudioPostControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MessageStickerControl.xaml.cs">
       <DependentUpon>MessageStickerControl.xaml</DependentUpon>
     </Compile>
@@ -1785,8 +1788,11 @@
       <DependentUpon>SettingsFlyoutControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\AudioTimeSpanConverter.cs" />
+    <Compile Include="Converters\PostTimeConverter.cs" />
     <Compile Include="Converters\ChatAttachmentUploadTemplateSelector.cs" />
     <Compile Include="Converters\CompactDialogTemplateSelector.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\NowPlayingVisibilityConverter.cs" />
     <Compile Include="Converters\DialogBodyContentTemplateSelector.cs" />
     <Compile Include="Converters\DialogTemplateSelector.cs" />
     <Compile Include="Converters\ListItemClickArgsConverter.cs" />
@@ -1814,6 +1820,8 @@
     <Compile Include="Model\SettingsAppLanguage.cs" />
     <Compile Include="Model\SettingsAppTheme.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Model\AudioPost.cs" />
+    <Compile Include="Model\FeedResult.cs" />
     <Compile Include="Resources\DataTemplates\ConversationDataTemplates.cs" />
     <Compile Include="Resources\DataTemplates\DialogsDataTemplates.cs" />
     <Compile Include="Helpers\IncrementalTopLoadingCollection.cs" />
@@ -1829,6 +1837,7 @@
     <Compile Include="Model\Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AudioService.cs" />
+    <Compile Include="Services\FeedService.cs" />
     <Compile Include="Services\ExceptionHandler.cs" />
     <Compile Include="Services\Logger.cs" />
     <Compile Include="Services\LongPollHandler.cs" />
@@ -1928,6 +1937,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MessageForwardedMessageControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Controls\AudioPostControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -2098,6 +2111,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\NewsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProfileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

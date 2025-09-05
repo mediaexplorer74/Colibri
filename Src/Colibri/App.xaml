@@ -1,4 +1,4 @@
-﻿<app:JupiterApp
+<app:JupiterApp
     x:Class="Colibri.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -37,6 +37,8 @@
 
             <converters:MessageTimeConverter x:Key="MessageTimeConverter"/>
             <converters:AudioTimeSpanConverter x:Key="AudioTimeConverter"/>
+            <converters:AudioTimeSpanConverter x:Key="AudioTimeSpanConverter"/>
+            <converters:PostTimeConverter x:Key="PostTimeConverter"/>
             <converters:MessageDocumentSizeToStringConverter x:Key="MessageDocumentSizeToStringConverter"/>
         </ResourceDictionary>
     </Application.Resources>

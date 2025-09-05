@@ -4,22 +4,77 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:conv="using:Colibri.Converters"
+    xmlns:controls="using:Colibri.View.Controls"
+    xmlns:vk="using:VkLib.Core.Audio"
     mc:Ignorable="d"
     Loaded="Page_Loaded">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.Resources>
+            <conv:BoolToVisibilityConverter x:Key="BoolToVis" />
+            <conv:NowPlayingVisibilityConverter x:Key="NowPlayingVis" />
+
+            <!-- Hover/Pressed feedback for music rows -->
+            <Style x:Key="MusicListViewItemStyle" TargetType="ListViewItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListViewItem">
+                            <ListViewItemPresenter
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                CheckBrush="{ThemeResource SystemControlForegroundAccentBrush}"
+                                SelectionCheckMarkVisualEnabled="False"
+                                PointerOverBackground="{ThemeResource SystemControlHighlightListLowBrush}"
+                                PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}"
+                                SelectedBackground="{ThemeResource SystemControlHighlightListAccentLowBrush}"
+                                SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}"
+                                SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
         <Pivot x:Name="RootPivot" SelectionChanged="RootPivot_SelectionChanged">
             <PivotItem Header="Моя музыка">
                 <Grid>
                     <ProgressRing IsActive="{Binding IsLoadingMy}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,16,0,0"/>
                     <TextBlock Text="{Binding ErrorMy}" Foreground="Red" Margin="12,40,12,12" TextWrapping="Wrap" Visibility="{Binding ErrorMy, Converter={StaticResource IsEmptyToVisibilityConverter}}"/>
                     <RefreshContainer Margin="0,40,0,0" RefreshRequested="MyList_RefreshRequested">
-                        <ListView ItemsSource="{Binding MyMusic}" IsItemClickEnabled="True" ItemClick="TracksList_ItemClick">
+                        <ListView x:Name="MyListView" ItemsSource="{Binding MyMusic}" IsItemClickEnabled="True" ItemClick="TracksList_ItemClick" SelectionMode="Single" Loaded="ListView_Loaded" ItemContainerStyle="{StaticResource MusicListViewItemStyle}">
                         <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Padding="12,8">
-                                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
-                                    <TextBlock Text="{Binding Artist}" Opacity="0.8"/>
-                                </StackPanel>
+                            <DataTemplate x:DataType="vk:VkAudio">
+                                <Grid Padding="12,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Width="3" Background="{ThemeResource SystemControlForegroundAccentBrush}" CornerRadius="1"
+                                            VerticalAlignment="Stretch" Visibility="{Binding Converter={StaticResource NowPlayingVis}}"/>
+                                    <!-- Album art thumbnail with placeholder when missing -->
+                                    <Grid Grid.Column="1" Width="40" Height="40" Margin="8,0,8,0">
+                                        <Image Stretch="UniformToFill" Source="{Binding Album.Thumb.Photo68}"/>
+                                        <Border Background="{ThemeResource SystemControlBackgroundBaseLowBrush}" CornerRadius="2"
+                                                Visibility="{Binding Album.Thumb.Photo68, Converter={StaticResource IsEmptyToVisibilityConverter}}">
+                                            <TextBlock Text="♪" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.7"/>
+                                        </Border>
+                                    </Grid>
+                                    <StackPanel Grid.Column="2">
+                                        <StackPanel Orientation="Horizontal">
+                                            <!-- Pause glyph visible for now playing -->
+                                            <TextBlock Text="⏸" Foreground="{ThemeResource SystemControlForegroundAccentBrush}" Margin="0,0,6,0" Visibility="{Binding Converter={StaticResource NowPlayingVis}}"/>
+                                            <TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding Artist}" Opacity="0.8"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="3" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Opacity="0.7" Margin="8,0,0,0"/>
+                                </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                         </ListView>
@@ -31,15 +86,58 @@
                     <ProgressRing IsActive="{Binding IsLoadingPopular}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,16,0,0"/>
                     <TextBlock Text="{Binding ErrorPopular}" Foreground="Red" Margin="12,40,12,12" TextWrapping="Wrap" Visibility="{Binding ErrorPopular, Converter={StaticResource IsEmptyToVisibilityConverter}}"/>
                     <RefreshContainer Margin="0,40,0,0" RefreshRequested="PopularList_RefreshRequested">
-                        <ListView ItemsSource="{Binding Popular}" IsItemClickEnabled="True" ItemClick="TracksList_ItemClick">
+                        <ListView x:Name="PopularListView" ItemsSource="{Binding Popular}" IsItemClickEnabled="True" ItemClick="TracksList_ItemClick" SelectionMode="Single" Loaded="ListView_Loaded" ItemContainerStyle="{StaticResource MusicListViewItemStyle}">
                         <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Padding="12,8">
-                                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
-                                    <TextBlock Text="{Binding Artist}" Opacity="0.8"/>
-                                </StackPanel>
+                            <DataTemplate x:DataType="vk:VkAudio">
+                                <Grid Padding="12,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Width="3" Background="{ThemeResource SystemControlForegroundAccentBrush}" CornerRadius="1"
+                                            VerticalAlignment="Stretch" Visibility="{Binding Converter={StaticResource NowPlayingVis}}"/>
+                                    <!-- Album art thumbnail with placeholder when missing -->
+                                    <Grid Grid.Column="1" Width="40" Height="40" Margin="8,0,8,0">
+                                        <Image Stretch="UniformToFill" Source="{Binding Album.Thumb.Photo68}"/>
+                                        <Border Background="{ThemeResource SystemControlBackgroundBaseLowBrush}" CornerRadius="2"
+                                                Visibility="{Binding Album.Thumb.Photo68, Converter={StaticResource IsEmptyToVisibilityConverter}}">
+                                            <TextBlock Text="♪" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.7"/>
+                                        </Border>
+                                    </Grid>
+                                    <StackPanel Grid.Column="2">
+                                        <StackPanel Orientation="Horizontal">
+                                            <!-- Pause glyph visible for now playing -->
+                                            <TextBlock Text="⏸" Foreground="{ThemeResource SystemControlForegroundAccentBrush}" Margin="0,0,6,0" Visibility="{Binding Converter={StaticResource NowPlayingVis}}"/>
+                                            <TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding Artist}" Opacity="0.8"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="3" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Opacity="0.7" Margin="8,0,0,0"/>
+                                </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
+                        </ListView>
+                    </RefreshContainer>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="Стена">
+                <Grid>
+                    <ProgressRing IsActive="{Binding IsLoadingFeed}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,16,0,0"/>
+                    <TextBlock Text="{Binding ErrorFeed}" Foreground="Red" Margin="12,40,12,12" TextWrapping="Wrap" Visibility="{Binding ErrorFeed, Converter={StaticResource IsEmptyToVisibilityConverter}}"/>
+                    <RefreshContainer Margin="0,40,0,0" RefreshRequested="FeedList_RefreshRequested">
+                        <ListView x:Name="FeedListView" ItemsSource="{Binding FeedPosts}" SelectionMode="None" Loaded="FeedListView_Loaded">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <controls:AudioPostControl />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListView.Footer>
+                                <StackPanel Padding="0,8,0,16" HorizontalAlignment="Center">
+                                    <ProgressRing IsActive="{Binding IsLoadingFeed}" Width="24" Height="24"/>
+                                </StackPanel>
+                            </ListView.Footer>
                         </ListView>
                     </RefreshContainer>
                 </Grid>
