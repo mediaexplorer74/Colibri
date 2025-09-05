@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.2092
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colibri", "Src\Colibri\Colibri.csproj", "{B0345B62-25A9-40D2-8211-B9E2B087E067}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colibri", "Colibri\Colibri.csproj", "{B0345B62-25A9-40D2-8211-B9E2B087E067}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackgroundTasks", "Src\Tasks\BackgroundTasks\BackgroundTasks.csproj", "{AE494EAD-BB67-4809-90BD-CE1A241B2192}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackgroundTasks", "Tasks\BackgroundTasks\BackgroundTasks.csproj", "{AE494EAD-BB67-4809-90BD-CE1A241B2192}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jupiter.UWP", "Src\Jupiter\Jupiter.UWP\Jupiter.UWP.csproj", "{51F9F331-1237-4D09-B8B7-EB00BE730C19}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jupiter.UWP", "Jupiter\Jupiter.UWP\Jupiter.UWP.csproj", "{51F9F331-1237-4D09-B8B7-EB00BE730C19}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VkLib", "Src\VkLib\VkLib.csproj", "{53A806D8-1A75-41E3-B672-C75639E4C7A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VkLib", "VkLib\VkLib.csproj", "{53A806D8-1A75-41E3-B672-C75639E4C7A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

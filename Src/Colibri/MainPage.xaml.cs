@@ -1,4 +1,4 @@
-﻿using Windows.UI.Core;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -39,6 +39,9 @@ namespace Colibri
 
             Window.Current.SetTitleBar(FakeTitleBar);
             ViewModelLocator.Main.OnNavigatedTo(null, e.NavigationMode);
+
+            // Ensure the page DataContext (DialogsViewModel) gets navigation callback to trigger loading
+            (this.DataContext as DialogsViewModel)?.OnNavigatedTo(null, e.NavigationMode);
 
             SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
         }
@@ -81,7 +84,7 @@ namespace Colibri
                     VisualStateManager.GoToState(this, "NarrowChatState", true);
                 }
                 else
-                    VisualStateManager.GoToState(this, "Default", true);
+                    VisualStateManager.GoToState(this, "DefaultState", true);
             }
             else
             {
@@ -103,7 +106,7 @@ namespace Colibri
                     VisualStateManager.GoToState(this, "NarrowState", true);
             }
             else if (e.NewSize.Width >= 720 && e.PreviousSize.Width < 720)
-                VisualStateManager.GoToState(this, "Default", true);
+                VisualStateManager.GoToState(this, "DefaultState", true);
         }
 
         private void BackButton_OnClick(object sender, RoutedEventArgs e)

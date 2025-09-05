@@ -1,20 +1,41 @@
-# Colibri
+# Colibri v3.0.1 - master branch
+
+![](/Images/logo.png)
 
 My fork of Artem Shuba's Colibri UWP App.
 
-## Screenshot(s)
-![](Images/shot1.png)
+So, this is the UWP version for Windows 10/Mobile (min. os. build: 10240).
+
+## About
+My "Project Calibri" is synthez of Calibri & Meridian. So, it planned as messenger + music player which allows you to listen to music from popular Russian social network [vk.com](https://vk.com). 
+
+## Screenshots
+![](/Images/sshot01.png)
+![](/Images/sshot02.png)
+![](/Images/sshot03.png)
 
 ## My 2 cents
+- VK Api version increased, VK login is ok at now
+- Initial state of Messenger+Music Player conjunction  
+- Astoria 10240 - successfully compiled but app don t want to start :(
 
-- Exception "8:Invalid request: versions below 5.81 are deprecated" fixed (I set vk version to 5.82).
-- Min. os. win build downdraded to 10240 for better Astoria compatibility :)
-- Tested (a little) at my Lumias (950, 640 DS and 640 with Astoria). All seems to be ok, over 7 (!) years. Artem is genious :)
+## TODO / The fields to improve 
+- All code exploring/refactoring (UI, controls, localization...)
+- Additional tests 
+- Try to migrate from vk.com to vk.ru 
 
 ## References
 - https://github.com/artemshuba/ Great C# Developer
 - https://github.com/artemshuba/Colibri/ The original Colibri project
 
-## Cheers up,
-m.e. 2022
+## .. 
+As is. No support. RnD only. DIY!
+
+## .
+ [m][e] Sep, 5 2025
+
+
+
+
+
 

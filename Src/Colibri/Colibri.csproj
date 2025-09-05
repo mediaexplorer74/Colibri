@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -22,7 +22,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <PackageCertificateThumbprint>AB21CFBE8339BECCD42E91C153F354FF42B11D2C</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>1E69722CBB5D09FD3B7F8C4FBD47749D49C88FCD</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>arm</AppxBundlePlatforms>
@@ -31,6 +31,7 @@
     <AppInstallerUpdateFrequency>1</AppInstallerUpdateFrequency>
     <AppInstallerCheckForUpdateFrequency>OnApplicationRun</AppInstallerCheckForUpdateFrequency>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -1753,8 +1754,11 @@
     <Compile Include="Controls\MessageForwardedMessageControl.xaml.cs">
       <DependentUpon>MessageForwardedMessageControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MessageServiceControl.xaml.cs">
-      <DependentUpon>MessageServiceControl.xaml</DependentUpon>
+    <Compile Include="Controls\MessageStickerControl.xaml.cs">
+      <DependentUpon>MessageStickerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlayerMiniControl.xaml.cs">
+      <DependentUpon>PlayerMiniControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PopupControl.xaml.cs">
       <DependentUpon>PopupControl.xaml</DependentUpon>
@@ -1818,6 +1822,9 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Shell.xaml.cs">
+      <DependentUpon>Shell.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\Dialog.cs" />
     <Compile Include="Model\Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1832,6 +1839,7 @@
     <Compile Include="ViewModel\DialogsViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\MusicViewModel.cs" />
     <Compile Include="ViewModel\Messaging\GoToDialogMessage.cs" />
     <Compile Include="ViewModel\Messaging\LoginStateChangedMessage.cs" />
     <Compile Include="ViewModel\Messaging\LongPollChatMessage.cs" />
@@ -1863,6 +1871,15 @@
     </Compile>
     <Compile Include="View\VideoPreviewView.xaml.cs">
       <DependentUpon>VideoPreviewView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NewsView.xaml.cs">
+      <DependentUpon>NewsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MusicView.xaml.cs">
+      <DependentUpon>MusicView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\VideoView.xaml.cs">
+      <DependentUpon>VideoView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -1914,6 +1931,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\MessageStickerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PlayerMiniControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\MessageServiceControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1955,6 +1979,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Shell.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -2066,6 +2094,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\VideoPreviewView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NewsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MusicView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\VideoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

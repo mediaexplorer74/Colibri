@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -453,16 +453,24 @@ namespace Colibri.ViewModel
                 {
                     var users = await ServiceLocator.UserService.GetChatUsers(Dialog.Message.ChatId);
 
-                    Dialog.Users = users;
+                    // Initialize and deduplicate by Id
+                    Dialog.Users = users?.GroupBy(u => u.Id).Select(g => g.First()).ToList() ?? new List<VkProfile>();
 
-                    if (Dialog.Users == null)
-                        Dialog.Users = new List<VkProfile>();
-
-                    if (!Dialog.Users.Contains(ViewModelLocator.Main.CurrentUser))
+                    // Ensure current user is present only once (Id-based)
+                    if (!Dialog.Users.Any(u => u.Id == ViewModelLocator.Main.CurrentUser.Id))
                         Dialog.Users.Add(ViewModelLocator.Main.CurrentUser);
                 }
 
-                var vkMessages = await ServiceLocator.Vkontakte.Execute.GetChatHistoryAndMarkAsRead(!isChat ? Dialog.User.Profile.Id : 0, chatId: isChat ? Dialog.Message.ChatId : 0, count: DeviceHelper.IsMobile() ? 20 : 50, markAsRead: !AppSettings.DontMarkMessagesAsRead);
+                var vkMessages = await ServiceLocator.Vkontakte.Messages.GetHistory(
+                    !isChat ? Dialog.User.Profile.Id : 0,
+                    chatId: isChat ? Dialog.Message.ChatId : 0,
+                    count: DeviceHelper.IsMobile() ? 20 : 50);
+                if (!AppSettings.DontMarkMessagesAsRead)
+                {
+                    var peerId = !isChat ? Dialog.User.Profile.Id.ToString() : (2000000000 + Dialog.Message.ChatId).ToString();
+                    await ServiceLocator.Vkontakte.Messages.MarkAsRead(null, peerId: peerId);
+                }
+
                 if (!vkMessages.Items.IsNullOrEmpty())
                 {
                     if (isChat)
@@ -512,7 +520,17 @@ namespace Colibri.ViewModel
             try
             {
                 bool isChat = Dialog.Message.ChatId != 0;
-                var vkMessages = await ServiceLocator.Vkontakte.Execute.GetChatHistoryAndMarkAsRead(!isChat ? Dialog.User.Profile.Id : 0, chatId: isChat ? Dialog.Message.ChatId : 0, count: (int)count, offset: Messages.Count, markAsRead: !AppSettings.DontMarkMessagesAsRead);
+                var vkMessages = await ServiceLocator.Vkontakte.Messages.GetHistory(
+                    !isChat ? Dialog.User.Profile.Id : 0,
+                    chatId: isChat ? Dialog.Message.ChatId : 0,
+                    offset: Messages.Count,
+                    count: (int)count);
+                if (!AppSettings.DontMarkMessagesAsRead)
+                {
+                    var peerId = !isChat ? Dialog.User.Profile.Id.ToString() : (2000000000 + Dialog.Message.ChatId).ToString();
+                    await ServiceLocator.Vkontakte.Messages.MarkAsRead(null, peerId: peerId);
+                }
+
                 if (!vkMessages.Items.IsNullOrEmpty())
                 {
                     TaskFinished("history"); //таска может быть активна, тогда LoadingIndicator будет накладываться на список

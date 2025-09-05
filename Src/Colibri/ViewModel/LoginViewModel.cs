@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Windows.Security.Authentication.Web;
 using Windows.System;
 using Colibri.Helpers;
@@ -101,12 +101,12 @@ namespace Colibri.ViewModel
 
             RestorePasswordCommand = new RelayCommand(async () =>
             {
-                await Launcher.LaunchUriAsync(new Uri("http://vk.com/restore"));
+                await Launcher.LaunchUriAsync(new Uri("https://vk.com/restore"));
             });
 
             SignUpCommand = new RelayCommand(async () =>
             {
-                await Launcher.LaunchUriAsync(new Uri("http://vk.com"));
+                await Launcher.LaunchUriAsync(new Uri("https://vk.com"));
             });
         }
 
@@ -143,7 +143,7 @@ namespace Colibri.ViewModel
                     AppSettings.AccessToken = token;
                 }
 
-                Navigator.Main.Navigate(typeof(MainPage), clearHistory: true);
+                Navigator.Main.Navigate(typeof(Shell), clearHistory: true);
                 Messenger.Default.Send(new LoginStateChangedMessage() { IsLoggedIn = true });
             }
             catch (VkCaptchaNeededException ex)
@@ -193,7 +193,7 @@ namespace Colibri.ViewModel
                     ServiceLocator.Vkontakte.AccessToken = token.AccessToken;
                     AppSettings.AccessToken = token.AccessToken;
 
-                    Navigator.Main.Navigate(typeof(MainPage), clearHistory: true);
+                    Navigator.Main.Navigate(typeof(Shell), clearHistory: true);
                     Messenger.Default.Send(new LoginStateChangedMessage() { IsLoggedIn = true });
                 }
             }

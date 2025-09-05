@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -92,7 +92,7 @@ namespace Colibri
                 else
                 {
                     ServiceLocator.Vkontakte.AccessToken = AppSettings.AccessToken;
-                    NavigationService.Navigate(typeof(MainPage));
+                    NavigationService.Navigate(typeof(Shell));
                 }
             }
 

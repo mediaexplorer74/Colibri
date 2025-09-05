@@ -1,13 +1,17 @@
-﻿using VkLib;
+using VkLib;
 
 namespace Colibri.Services
 {
     public class ServiceLocator
     {
-        private const string VKAPP_ID = "3059212";
-        private const string VKAPP_SECRET = "CEPu3hrA9DK5Ur6pBbia";
+        private const string VKAPP_ID = "2274003";
+        private const string VKAPP_SECRET = "hHbZxrka2uZ6jB1inYsH";
 
-        public static Vk Vkontakte { get; } = new Vk(VKAPP_ID, VKAPP_SECRET, "5.82");//"5.38");
+        public static Vk Vkontakte { get; } = new Vk(
+            VKAPP_ID,
+            VKAPP_SECRET,
+            "5.116",
+            "VKAndroidApp/5.52-4543 (Android 5.1.1; SDK 22; x86_64; unknown Android SDK built for x86_64; en; 320x240)");
 
         public static LongPollHandler LongPollHandler { get; } = new LongPollHandler(Vkontakte);
 

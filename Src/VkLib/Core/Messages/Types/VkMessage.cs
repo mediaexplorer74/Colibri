@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
@@ -124,16 +124,20 @@ namespace VkLib.Core.Messages
 
             if (json["user_id"] != null)
                 result.UserId = (long)json["user_id"];
+            else if (json["from_id"] != null)
+                result.UserId = (long)json["from_id"];
             result.Date = DateTimeExtensions.UnixTimeStampToDateTime((long)json["date"]);
 
             if (json["read_state"] != null)
                 result.IsRead = (int)json["read_state"] == 1;
+            else if (json["is_read"] != null)
+                result.IsRead = json["is_read"].Value<bool>();
 
             if (json["out"] != null)
                 result.IsOut = (int)json["out"] == 1;
 
             result.Title = (string)json["title"];
-            result.Body = (string)json["body"];
+            result.Body = (string)(json["body"] ?? json["text"]);
 
             if (json["deleted"] != null)
                 result.IsDeleted = (int)json["deleted"] == 1;

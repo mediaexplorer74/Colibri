@@ -36,7 +36,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition />
-            <RowDefinition Height="Auto"/>
+            <!--RowDefinition Height="Auto"/-->
         </Grid.RowDefinitions>
 
 
@@ -64,14 +64,13 @@
             </ListView>
         </commonControls:LoadingIndicator>
 
-        <CommandBar Grid.Row="2">
+        <!--CommandBar Grid.Row="2">
             <AppBarButton x:Uid="AppbarButtonNewDialog" Icon="Add" Label="~New" Command="{Binding Main.GoToContactsCommand, Source={StaticResource Locator}}"/>
             <AppBarButton x:Uid="AppbarButtonRefresh" Icon="Refresh" Label="~Refresh" Command="{Binding RefreshCommand}"/>
-            <!--<AppBarButton x:Uid="AppbarButtonSearch" Icon="Find" Label="~Search" IsEnabled="False"/>-->
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Uid="AppbarButtonSettings" Label="~Settings" Command="{Binding Main.GoToSettingsCommand, Source={StaticResource Locator}}"/>
                 <AppBarButton x:Uid="AppbarButtonSignOut" Label="~Sign out" Command="{Binding Main.SignOutCommand, Source={StaticResource Locator}}"/>
             </CommandBar.SecondaryCommands>
-        </CommandBar>
+        </CommandBar-->
     </Grid>
 </Page>

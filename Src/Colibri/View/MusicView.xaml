@@ -1,0 +1,49 @@
+<Page
+    x:Class="Colibri.View.MusicView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Pivot x:Name="RootPivot" SelectionChanged="RootPivot_SelectionChanged">
+            <PivotItem Header="Моя музыка">
+                <Grid>
+                    <ProgressRing IsActive="{Binding IsLoadingMy}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,16,0,0"/>
+                    <TextBlock Text="{Binding ErrorMy}" Foreground="Red" Margin="12,40,12,12" TextWrapping="Wrap" Visibility="{Binding ErrorMy, Converter={StaticResource IsEmptyToVisibilityConverter}}"/>
+                    <RefreshContainer Margin="0,40,0,0" RefreshRequested="MyList_RefreshRequested">
+                        <ListView ItemsSource="{Binding MyMusic}" IsItemClickEnabled="True" ItemClick="TracksList_ItemClick">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Padding="12,8">
+                                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding Artist}" Opacity="0.8"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        </ListView>
+                    </RefreshContainer>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="Популярное">
+                <Grid>
+                    <ProgressRing IsActive="{Binding IsLoadingPopular}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,16,0,0"/>
+                    <TextBlock Text="{Binding ErrorPopular}" Foreground="Red" Margin="12,40,12,12" TextWrapping="Wrap" Visibility="{Binding ErrorPopular, Converter={StaticResource IsEmptyToVisibilityConverter}}"/>
+                    <RefreshContainer Margin="0,40,0,0" RefreshRequested="PopularList_RefreshRequested">
+                        <ListView ItemsSource="{Binding Popular}" IsItemClickEnabled="True" ItemClick="TracksList_ItemClick">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Padding="12,8">
+                                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding Artist}" Opacity="0.8"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        </ListView>
+                    </RefreshContainer>
+                </Grid>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+</Page>

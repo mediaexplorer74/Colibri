@@ -1,7 +1,6 @@
-﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Colibri.Model;
-using VkLib.Core.Messages;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -20,9 +19,9 @@ namespace Colibri.Controls
                 control.MessageTextBlock.Text = message.GetActionText();
         }
 
-        public VkMessage Message
+        public Message Message
         {
-            get { return (VkMessage)GetValue(MessageProperty); }
+            get { return (Message)GetValue(MessageProperty); }
             set { SetValue(MessageProperty, value); }
         }
 

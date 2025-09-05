@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -50,6 +50,8 @@ namespace Colibri.ViewModel
             get { return _selectedDialog; }
             set { Set(ref _selectedDialog, value); }
         }
+
+        private bool _messagesSubscribed;
 
         public DialogsViewModel()
         {
@@ -193,12 +195,16 @@ namespace Colibri.ViewModel
                         var d = new Dialog(vkDialog);
                         if (vkDialog.Message.ChatUsers != null && vkDialog.Message.ChatUsers.Count > 0)
                         {
-                            d.Users = users.Items.Where(x => vkDialog.Message.ChatUsers.Contains(x.Id)).ToList();
+                            d.Users = users.Items
+                                .Where(profile => vkDialog.Message.ChatUsers.Contains(profile.Id))
+                                .GroupBy(profile => profile.Id)
+                                .Select(g => g.First())
+                                .ToList();
                         }
 
-                        var u = users.Items.FirstOrDefault(x => vkDialog.Message.UserId == x.Id);
-                        if (u != null)
-                            d.User = new User(u);
+                        var userMatch = users.Items.FirstOrDefault(profile => vkDialog.Message.UserId == profile.Id);
+                        if (userMatch != null)
+                            d.User = new User(userMatch);
                         else
                         {
                             Logger.Info("Found possible dialog with society " + vkDialog.Message.UserId);
@@ -230,6 +236,9 @@ namespace Colibri.ViewModel
 
         private void SubscribeMessages()
         {
+            if (_messagesSubscribed)
+                return;
+
             Messenger.Default.Register<LongPollChatMessage>(this, OnChatMessage);
             Messenger.Default.Register<LongPollFriendOnlineStatusChangedMessage>(this, OnFriendOnlineStatusChanged);
             Messenger.Default.Register<LongPollMessageFlagsRemoved>(this, OnMessageFlagsRemoved);
@@ -238,18 +247,18 @@ namespace Colibri.ViewModel
             Messenger.Default.Register<NewDialogStartedMessage>(this, OnNewDialogStarted);
             Messenger.Default.Register<GoToDialogMessage>(this, OnGoToDialogMessage);
             Messenger.Default.Register<LoginStateChangedMessage>(this, OnLoginStateChanged);
+
+            _messagesSubscribed = true;
         }
 
         private void UnsubscribeMessages()
         {
-            Messenger.Default.Unregister<LongPollChatMessage>(this, OnChatMessage);
-            Messenger.Default.Unregister<LongPollFriendOnlineStatusChangedMessage>(this, OnFriendOnlineStatusChanged);
-            Messenger.Default.Unregister<LongPollMessageFlagsRemoved>(this, OnMessageFlagsRemoved);
-            Messenger.Default.Unregister<LongPollMessageFlagsAdded>(this, OnMessageFlagsAdded);
+            if (!_messagesSubscribed)
+                return;
 
-            Messenger.Default.Unregister<NewDialogStartedMessage>(this, OnNewDialogStarted);
-            Messenger.Default.Unregister<GoToDialogMessage>(this, OnGoToDialogMessage);
-            Messenger.Default.Unregister<LoginStateChangedMessage>(this, OnLoginStateChanged);
+            // Unregister all messages for this instance in a safe, idempotent way
+            Messenger.Default.Unregister(this);
+            _messagesSubscribed = false;
         }
 
         private async void OnChatMessage(LongPollChatMessage message)
