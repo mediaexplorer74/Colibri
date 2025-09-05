@@ -7,7 +7,7 @@ My fork of Artem Shuba's Colibri UWP App.
 So, this is the UWP version for Windows 10/Mobile (min. os. build: 10240).
 
 ## About
-My "Project Calibri" is synthez of 2 Artem Shuba's projets: Colibri & Meridian. 
+My "Project Calibri" is synthez of 2 Artem Shuba's projects: Colibri & Meridian. 
 So, it planned as messenger + music player which allows you to listen to music from popular Russian social network [vk.com](https://vk.com). 
 
 ## Screenshots
@@ -30,7 +30,9 @@ So, it planned as messenger + music player which allows you to listen to music f
 
 ## References
 - https://github.com/artemshuba/ Great C# Developer
-- https://github.com/artemshuba/Colibri/ The original Colibri project
+- https://github.com/artemshuba/Colibri/ The original Colibri project (UWP)
+- https://github.com/artemshuba/meridian-uwp  The original Meridian project (UWP)
+- https://github.com/artemshuba/meridian The original Meridian project (Desktop)
 
 ## .. 
 As is. No support. RnD only. DIY!
