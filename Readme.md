@@ -7,7 +7,8 @@ My fork of Artem Shuba's Colibri UWP App.
 So, this is the UWP version for Windows 10/Mobile (min. os. build: 10240).
 
 ## About
-My "Project Calibri" is synthez of Calibri & Meridian. So, it planned as messenger + music player which allows you to listen to music from popular Russian social network [vk.com](https://vk.com). 
+My "Project Calibri" is synthez of 2 Artem Shuba's projets: Colibri & Meridian. 
+So, it planned as messenger + music player which allows you to listen to music from popular Russian social network [vk.com](https://vk.com). 
 
 ## Screenshots
 ![](/Images/sshot01.png)
@@ -18,6 +19,9 @@ My "Project Calibri" is synthez of Calibri & Meridian. So, it planned as messeng
 - VK Api version increased, VK login is ok at now
 - Initial state of Messenger+Music Player conjunction  
 - Astoria 10240 - successfully compiled but app don t want to start :(
+
+## Big problem
+- New Auth/Login "mechanics" (Android masking) damaged notifications :(
 
 ## TODO / The fields to improve 
 - All code exploring/refactoring (UI, controls, localization...)
