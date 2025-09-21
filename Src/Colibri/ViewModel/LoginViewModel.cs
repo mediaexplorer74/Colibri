@@ -101,12 +101,12 @@ namespace Colibri.ViewModel
 
             RestorePasswordCommand = new RelayCommand(async () =>
             {
-                await Launcher.LaunchUriAsync(new Uri("https://vk.com/restore"));
+                await Launcher.LaunchUriAsync(new Uri("https://vk.ru/restore"));
             });
 
             SignUpCommand = new RelayCommand(async () =>
             {
-                await Launcher.LaunchUriAsync(new Uri("https://vk.com"));
+                await Launcher.LaunchUriAsync(new Uri("https://vk.ru"));
             });
         }
 
@@ -182,7 +182,7 @@ namespace Colibri.ViewModel
 
         private async void ValidateUser(Uri redirectUri)
         {
-            var result = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, redirectUri, new Uri("https://oauth.vk.com/blank.html"));
+            var result = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, redirectUri, new Uri("https://oauth.vk.ru/blank.html"));
             if (result.ResponseStatus == WebAuthenticationStatus.Success)
             {
                 var token = ServiceLocator.Vkontakte.OAuth.ProcessAuth(new Uri(result.ResponseData));

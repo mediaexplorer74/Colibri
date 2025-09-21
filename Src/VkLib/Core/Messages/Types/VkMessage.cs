@@ -9,7 +9,7 @@ namespace VkLib.Core.Messages
 {
     /// <summary>
     /// Message
-    /// <see cref="http://vk.com/dev/message"/>
+    /// <see cref="http://vk.ru/dev/message"/>
     /// </summary>
     public class VkMessage
     {

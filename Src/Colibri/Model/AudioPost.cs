@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using VkLib.Core.Audio;
 using VkLib.Core.Users;
+using VkLib.Core.Attachments;
 
 namespace Colibri.Model
 {
@@ -16,6 +17,7 @@ namespace Colibri.Model
         public VkProfileBase Author { get; set; }
         public Uri ImageUri { get; set; }
         public List<VkLib.Core.Audio.VkAudio> Tracks { get; set; }
+        public List<VkVideoAttachment> Videos { get; set; }
         public Uri PostUri { get; set; }
         public Uri AuthorUri { get; set; }
     }

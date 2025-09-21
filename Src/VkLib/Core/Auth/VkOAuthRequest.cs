@@ -27,7 +27,7 @@ namespace VkLib.Core.Auth
 
             parameters.Add("client_id", _vkontakte.AppId);
             parameters.Add("scope", ((int)scope).ToString());
-            parameters.Add("redirect_uri", "https://oauth.vk.com/blank.html");
+            parameters.Add("redirect_uri", "https://oauth.vk.ru/blank.html");
             parameters.Add("v", _vkontakte.ApiVersion);
             parameters.Add("response_type", "token");
 

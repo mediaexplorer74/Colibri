@@ -41,6 +41,29 @@
                 <Image Source="{Binding ImageUri}" Height="200" Stretch="UniformToFill"/>
             </Grid>
 
+            <!-- Video attachments -->
+            <ItemsControl ItemsSource="{Binding Videos}" Margin="0,8,0,0">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Click="Video_Click" HorizontalAlignment="Stretch" Padding="0" Background="Transparent">
+                            <Grid Padding="0,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Width="120" Height="90" Source="{Binding Photo320}" Stretch="UniformToFill" Margin="0,0,12,0"/>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding Description}" Opacity="0.8" TextWrapping="WrapWholeWords" MaxLines="2"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="2" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Opacity="0.7"/>
+                            </Grid>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
             <!-- Tracks list -->
             <ListView x:Name="TracksList" ItemsSource="{Binding Tracks}" IsItemClickEnabled="True" SelectionMode="None" ItemClick="TracksList_ItemClick" Margin="-6,8,-6,0">
                 <ListView.ItemTemplate>

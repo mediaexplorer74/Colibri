@@ -16,7 +16,7 @@ namespace VkLib.Core.Users
 
     /// <summary>
     /// User profile
-    /// <seealso cref="http://vk.com/dev/fields"/>
+    /// <seealso cref="http://vk.ru/dev/fields"/>
     /// </summary>
     public class VkProfile : VkProfileBase
     {

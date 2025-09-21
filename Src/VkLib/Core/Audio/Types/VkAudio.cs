@@ -7,7 +7,7 @@ namespace VkLib.Core.Audio
 {
     /// <summary>
     /// Audio
-    /// <seealso cref="http://vk.com/dev/audio_object"/>
+    /// <seealso cref="http://vk.ru/dev/audio_object"/>
     /// </summary>
     public class VkAudio
     {
@@ -53,7 +53,7 @@ namespace VkLib.Core.Audio
 
         /// <summary>
         /// Genre id
-        /// <seealso cref="http://vk.com/dev/audio_genres"/>
+        /// <seealso cref="http://vk.ru/dev/audio_genres"/>
         /// </summary>
         public long GenreId { get; set; }
 

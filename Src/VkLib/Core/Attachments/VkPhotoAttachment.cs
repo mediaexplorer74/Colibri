@@ -7,7 +7,7 @@ namespace VkLib.Core.Attachments
 {
     /// <summary>
     /// Photo attachments
-    /// <seealso cref="http://vk.com/dev/photo"/>
+    /// <seealso cref="http://vk.ru/dev/photo"/>
     /// </summary>
     public class VkPhotoAttachment : VkAttachment
     {

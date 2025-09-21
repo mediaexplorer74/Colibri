@@ -20,7 +20,7 @@ namespace VkLib.Core.Auth
 
         /// <summary>
         /// <para>Direct auth with login and password.</para>
-        /// <para>See also: <seealso cref="http://vk.com/pages?oid=-1&p=Прямая_авторизация"/></para>
+        /// <para>See also: <seealso cref="http://vk.ru/pages?oid=-1&p=Прямая_авторизация"/></para>
         /// </summary>
         /// <param name="login">Login</param>
         /// <param name="password">Password</param>

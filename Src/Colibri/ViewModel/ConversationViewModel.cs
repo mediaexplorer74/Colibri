@@ -294,7 +294,7 @@ namespace Colibri.ViewModel
             GoToUserProfileCommand = new RelayCommand(async () =>
             {
                 //TODO пока открываем страницу в браузере
-                await Launcher.LaunchUriAsync(new Uri("http://vk.com/id" + Dialog.User.Profile.Id));
+                await Launcher.LaunchUriAsync(new Uri("http://vk.ru/id" + Dialog.User.Profile.Id));
             });
         }
 

@@ -2,7 +2,7 @@
 {
     /// <summary>
     /// Base class for user or group profile
-    /// <seealso cref="http://vk.com/dev/fields"/>
+    /// <seealso cref="http://vk.ru/dev/fields"/>
     /// </summary>
     public class VkProfileBase
     {

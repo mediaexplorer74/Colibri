@@ -52,7 +52,7 @@ namespace VkLib.Core.Users
         /// </summary>
         /// <param name="query">Search query string</param>
         /// <param name="sortType">Sort order</param>
-        /// <param name="fields">Profile fields to return. http://vk.com/dev/fields </param>
+        /// <param name="fields">Profile fields to return. http://vk.ru/dev/fields </param>
         /// <param name="city">City ID</param>
         /// <param name="country">Country ID</param>
         /// <param name="hometown">City name</param>

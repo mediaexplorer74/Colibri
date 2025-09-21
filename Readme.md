@@ -1,4 +1,4 @@
-# Colibri v3.0.3 - master branch
+# Colibri v3.0.3 - dev branch
 
 ![](/Images/logo.png)
 
@@ -6,23 +6,21 @@ My fork of Artem Shuba's Colibri UWP App.
 
 So, this is the UWP version for Windows 10/Mobile (min. os. build: 10240).
 
+Attention: the code in the _dev_ branch may not always be successfully compiled. This branch is for the process of developing, refining, disassembling, and assembling this and that. If there is some stability, then it is in the _master_ branch (but at the moment there is something that risks shutting down on October 1, 2025...)
+
 ## About
 My "Project Calibri" is synthez of 2 Artem Shuba's projects: Colibri & Meridian. 
 So, it planned as messenger + music player which allows you to listen to music from popular Russian social network [vk.com](https://vk.com). 
 
-## Screenshots
-![](/Images/sshot01.png)
-![](/Images/sshot02.png)
-![](/Images/sshot03.png)
-![](/Images/sshot04.png)
+## Screenshot
+![](/Images/screenshot.png)
+
 
 ## My 2 cents
 - VK Api version increased, VK login is ok at now
 - Initial state of Messenger+Music Player conjunction  
+- Migration (from vk.com to vk.ru) complete(d). Oct, 1 2025 ready! :) 
 
-## Big problem(s)
-- New Auth/Login "mechanics" (Android masking) damaged notifications :(
-- Astoria 10240 - successfully compiled but app don t want to start…
 
 ## What's new (thanks to ChatGPT AI)
 
@@ -83,10 +81,7 @@ Auto-advance loops within the current list (wrap-around).
 ## TODO / The fields to improve 
 - All code exploring/refactoring (UI, controls, localization...)
 - Additional tests 
-- Try to migrate from vk.com to vk.ru 
-- Video section
-- Profile section
-- Refactor Settings (simplify it!)
+- Add some AI magic to some "Popular music fusion" .... ;)
 
 ## References
 - https://github.com/artemshuba/ Great C# Developer
@@ -98,10 +93,10 @@ Auto-advance loops within the current list (wrap-around).
 As is. No support. RnD only. DIY!
 
 ## .
- [m][e] Sep, 6 2025
+ [m][e] Sep, 21 2025
 
 
-
+![](/Images/footer.png)
 
 
 

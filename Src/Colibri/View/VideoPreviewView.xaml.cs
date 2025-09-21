@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.System.Profile;
@@ -23,6 +23,9 @@ namespace Colibri.View
     public sealed partial class VideoPreviewView : Page
     {
         private VkVideoAttachment _videoAttachment;
+        private long? _ownerId;
+        private long? _videoId;
+        private string _accessKey;
 
         public VideoPreviewView()
         {
@@ -37,7 +40,17 @@ namespace Colibri.View
             var p = e.Parameter as Dictionary<string, object>;
             if (p != null)
             {
-                _videoAttachment = (VkVideoAttachment)p["video"];
+                if (p.ContainsKey("video") && p["video"] is VkVideoAttachment att)
+                {
+                    _videoAttachment = att;
+                }
+                else
+                {
+                    if (p.ContainsKey("ownerId")) _ownerId = System.Convert.ToInt64(p["ownerId"]);
+                    if (p.ContainsKey("id")) _videoId = System.Convert.ToInt64(p["id"]);
+                    if (p.ContainsKey("accessKey")) _accessKey = p["accessKey"] as string;
+                }
+
                 LoadVideo();
             }
 
@@ -54,7 +67,32 @@ namespace Colibri.View
 
             try
             {
-                var response = await ServiceLocator.Vkontakte.Video.Get(new[] { $"{_videoAttachment.OwnerId}_{_videoAttachment.Id}_{_videoAttachment.AccessKey}" });
+                string idParam = null;
+                if (_videoAttachment != null)
+                {
+                    // Include access key only if present
+                    if (!string.IsNullOrEmpty(_videoAttachment.AccessKey))
+                        idParam = $"{_videoAttachment.OwnerId}_{_videoAttachment.Id}_{_videoAttachment.AccessKey}";
+                    else
+                        idParam = $"{_videoAttachment.OwnerId}_{_videoAttachment.Id}";
+                }
+                else if (_ownerId.HasValue && _videoId.HasValue)
+                {
+                    if (!string.IsNullOrEmpty(_accessKey))
+                        idParam = $"{_ownerId.Value}_{_videoId.Value}_{_accessKey}";
+                    else
+                        idParam = $"{_ownerId.Value}_{_videoId.Value}";
+                }
+
+                if (string.IsNullOrEmpty(idParam))
+                {
+                    LoadingIndicator.Error = Localizator.String("Error/ChatVideoAttachmentLoadCommonError");
+                    LoadingIndicator.IsBusy = false;
+                    return;
+                }
+
+                var response = await ServiceLocator.Vkontakte.Video.Get(new[] { idParam });
+
                 if (response != null && !response.Items.IsNullOrEmpty())
                 {
                     var video = response.Items.First();

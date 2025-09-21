@@ -32,7 +32,7 @@ namespace VkLib.Core.Attachments
 
         public string GetLink()
         {
-            return $"https://vk.com/wall{FromId}_{Id}";
+            return $"https://vk.ru/wall{FromId}_{Id}";
         }
 
         public static new VkWallPostAttachment FromJson(JToken json)

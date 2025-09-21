@@ -22,7 +22,7 @@ namespace VkLib.Core.Messages
 
         /// <summary>
         /// <para>Send message</para>
-        /// <para>See also: <seealso cref="http://vk.com/dev/messages.send"/></para>
+        /// <para>See also: <seealso cref="http://vk.ru/dev/messages.send"/></para>
         /// </summary>
         /// <returns>Id of new message</returns>
         public async Task<long> Send(long userId, long chatId, string message, List<VkAttachment> attachments = null, List<VkMessage> forwardMessages = null, int stickerId = 0)

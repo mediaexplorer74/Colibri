@@ -4,8 +4,99 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:conv="using:Colibri.Converters"
     mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock Text="Video (placeholder)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+        <Pivot x:Name="RootPivot" SelectionChanged="RootPivot_SelectionChanged">
+            <PivotItem Header="Поиск">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Margin="12,8,12,0">
+                        <TextBox x:Name="SearchBox" Width="Auto" MinWidth="200" PlaceholderText="Поиск видео" Text="{Binding Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <CheckBox Content="HD" Margin="12,0,0,0" IsChecked="{Binding IsHdOnly, Mode=TwoWay}"/>
+                        <ComboBox Width="160" Margin="12,0,0,0" SelectedIndex="{Binding SortIndex, Mode=TwoWay}">
+                            <ComboBoxItem Content="По дате"/>
+                            <ComboBoxItem Content="По длительности"/>
+                            <ComboBoxItem Content="По релевантности"/>
+                            <ComboBoxItem Content="По числу просмотров"/>
+                        </ComboBox>
+                        <CheckBox Content="18+" Margin="12,0,0,0" IsChecked="{Binding IsAdult, Mode=TwoWay}"/>
+                        <Button Content="Найти" Margin="12,0,0,0" Click="Search_Click"/>
+                    </StackPanel>
+                    <Grid Grid.Row="1">
+                        <ProgressRing IsActive="{Binding IsLoadingSearch}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,16,0,0"/>
+                        <TextBlock Text="{Binding ErrorSearch}" Foreground="Red" Margin="12,40,12,12" TextWrapping="Wrap" Visibility="{Binding ErrorSearch, Converter={StaticResource IsEmptyToVisibilityConverter}}"/>
+                        <RefreshContainer Margin="0,0,0,0" RefreshRequested="SearchList_RefreshRequested">
+                            <ListView x:Name="SearchList" ItemsSource="{Binding SearchResults}" IsItemClickEnabled="True" ItemClick="VideosList_ItemClick" SelectionMode="None" Loaded="SearchList_Loaded">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Padding="12,8">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Width="120" Height="90" Source="{Binding Photo320}" Stretch="UniformToFill" Margin="0,0,12,0"/>
+                                            <StackPanel Grid.Column="1">
+            							<TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{Binding Description}" Opacity="0.8" TextWrapping="WrapWholeWords" MaxLines="2"/>
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="2" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Opacity="0.7"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                                <ListView.Footer>
+                                    <StackPanel Padding="0,8,0,16" HorizontalAlignment="Center">
+                                        <ProgressRing IsActive="{Binding IsLoadingSearch}" Width="24" Height="24"/>
+                                    </StackPanel>
+                                </ListView.Footer>
+                            </ListView>
+                        </RefreshContainer>
+                    </Grid>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="Мои">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Margin="12,8,12,0">
+                        <Button Content="Загрузить" Click="Upload_Click"/>
+                    </StackPanel>
+                    <ProgressRing Grid.Row="1" IsActive="{Binding IsLoadingMy}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,16,0,0"/>
+                    <TextBlock Grid.Row="1" Text="{Binding ErrorMy}" Foreground="Red" Margin="12,40,12,12" TextWrapping="Wrap" Visibility="{Binding ErrorMy, Converter={StaticResource IsEmptyToVisibilityConverter}}"/>
+                    <RefreshContainer Grid.Row="1" Margin="0,40,0,0" RefreshRequested="MyList_RefreshRequested">
+                        <ListView x:Name="MyList" ItemsSource="{Binding MyVideos}" IsItemClickEnabled="True" ItemClick="VideosList_ItemClick" SelectionMode="None" Loaded="MyList_Loaded">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="12,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Width="120" Height="90" Source="{Binding Photo320}" Stretch="UniformToFill" Margin="0,0,12,0"/>
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
+                                            <TextBlock Text="{Binding Description}" Opacity="0.8" TextWrapping="WrapWholeWords" MaxLines="2"/>
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="2" Text="{Binding Duration, Converter={StaticResource AudioTimeSpanConverter}}" Opacity="0.7"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListView.Footer>
+                                <StackPanel Padding="0,8,0,16" HorizontalAlignment="Center">
+                                    <ProgressRing IsActive="{Binding IsLoadingMy}" Width="24" Height="24"/>
+                                </StackPanel>
+                            </ListView.Footer>
+                        </ListView>
+                    </RefreshContainer>
+                </Grid>
+            </PivotItem>
+        </Pivot>
     </Grid>
 </Page>

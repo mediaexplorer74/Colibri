@@ -113,7 +113,7 @@ namespace VkLib.Core.Messages
 
     /// <summary>
     /// Message returned by long poll service
-    /// <seealso cref="http://vk.com/dev/using_longpoll"/>
+    /// <seealso cref="http://vk.ru/dev/using_longpoll"/>
     /// </summary>
     public class VkLongPollMessage
     {
@@ -254,7 +254,7 @@ namespace VkLib.Core.Messages
                                         var sticker = new VkStickerAttachment();
 
                                         sticker.ProductId = long.Parse(longPollAttachment.Data);
-                                        sticker.Photo256 = "http://vk.com/images/stickers/" + sticker.ProductId + "/256.png";
+                                        sticker.Photo256 = "http://vk.ru/images/stickers/" + sticker.ProductId + "/256.png";
                                         m.Attachments.Add(sticker);
                                     }
                                     else

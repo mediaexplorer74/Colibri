@@ -6,6 +6,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock Text="Profile" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <TextBlock Text="Профиль" HorizontalAlignment="Center" FontSize="20"/>
+            <Button Content="Выйти" Click="Logout_Click"/>
+        </StackPanel>
     </Grid>
 </Page>

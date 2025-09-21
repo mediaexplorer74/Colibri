@@ -1848,6 +1848,7 @@
     <Compile Include="ViewModel\DialogsViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\VideoViewModel.cs" />
     <Compile Include="ViewModel\MusicViewModel.cs" />
     <Compile Include="ViewModel\Messaging\GoToDialogMessage.cs" />
     <Compile Include="ViewModel\Messaging\LoginStateChangedMessage.cs" />
@@ -1889,6 +1890,9 @@
     </Compile>
     <Compile Include="View\VideoView.xaml.cs">
       <DependentUpon>VideoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProfileView.xaml.cs">
+      <DependentUpon>ProfileView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

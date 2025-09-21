@@ -36,10 +36,18 @@ namespace Colibri.Services
 
                     foreach (var newsEntry in response.Items)
                     {
-                        var attachments = newsEntry.Attachments;
-
-                        if ((attachments == null || attachments.Count == 0) && newsEntry.CopyHistory != null && newsEntry.CopyHistory.Count > 0)
-                            attachments = newsEntry.CopyHistory.Last().Attachments;
+                        // Merge attachments from the post and entire copy history chain
+                        var attachments = new List<VkAttachment>();
+                        if (newsEntry.Attachments != null)
+                            attachments.AddRange(newsEntry.Attachments);
+                        if (newsEntry.CopyHistory != null && newsEntry.CopyHistory.Count > 0)
+                        {
+                            foreach (var ch in newsEntry.CopyHistory)
+                            {
+                                if (ch.Attachments != null)
+                                    attachments.AddRange(ch.Attachments);
+                            }
+                        }
 
                         if (attachments == null || attachments.Count == 0)
                             continue;
@@ -51,22 +59,29 @@ namespace Colibri.Services
                         {
                             Id = newsEntry.Id.ToString(),
                             Text = newsEntry.Text,
-                            PostUri = new Uri($"http://vk.com/wall{newsEntry.SourceId}_{newsEntry.Id}"),
-                            AuthorUri = new Uri(string.Format("https://vk.com/{0}{1}", newsEntry.Author is VkGroup ? "club" : "id", newsEntry.Author.Id)),
+                            PostUri = new Uri($"http://vk.ru/wall{newsEntry.SourceId}_{newsEntry.Id}"),
+                            AuthorUri = new Uri(string.Format("https://vk.ru/{0}{1}", newsEntry.Author is VkGroup ? "club" : "id", newsEntry.Author.Id)),
                             Author = newsEntry.Author,
                             Date = newsEntry.Date
                         };
 
-                        var imageUrl = newsEntry.Attachments?.OfType<VkPhotoAttachment>().FirstOrDefault()?.SourceMax;
+                        var imageUrl = attachments.OfType<VkPhotoAttachment>().FirstOrDefault()?.SourceMax;
                         if (!string.IsNullOrEmpty(imageUrl))
                             post.ImageUri = new Uri(imageUrl);
+
+                        // Collect video attachments for UI
+                        post.Videos = attachments.OfType<VkVideoAttachment>().ToList();
 
                         posts.Add(post);
                         postAudioMatches.Add(post.Id, ids);
                     }
 
                     if (audioIds.Count == 0)
+                    {
+                        result.Posts = onlyWithAudio ? new List<AudioPost>() : posts;
+                        result.NextFrom = response.NextFrom;
                         return result;
+                    }
 
                     var tracks = new List<VkAudio>();
                     foreach (var chunk in Split(audioIds, 100))

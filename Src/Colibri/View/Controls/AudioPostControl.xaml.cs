@@ -6,6 +6,7 @@ using Colibri.Services;
 using VkLib.Core.Audio;
 using Windows.System;
 using Colibri.Model;
+using VkLib.Core.Attachments;
 
 namespace Colibri.View.Controls
 {
@@ -47,6 +48,20 @@ namespace Colibri.View.Controls
             {
                 await Launcher.LaunchUriAsync(post.PostUri);
             }
+        }
+
+        private void Video_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var video = btn?.DataContext as VkVideoAttachment;
+            if (video == null) return;
+
+            // Navigate to in-app video preview
+            var frame = Window.Current.Content as Frame;
+            frame?.Navigate(typeof(Colibri.View.VideoPreviewView), new System.Collections.Generic.Dictionary<string, object>
+            {
+                {"video", video}
+            });
         }
     }
 }

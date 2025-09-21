@@ -43,7 +43,7 @@ namespace VkLib.Core.Audio
 
         /// <summary>
         /// Get all audios of current user.
-        /// See also <see cref="http://vk.com/dev/audio.get"/>
+        /// See also <see cref="http://vk.ru/dev/audio.get"/>
         /// </summary>
         /// <returns></returns>
         public async Task<VkItemsResponse<VkAudio>> Get()
@@ -53,7 +53,7 @@ namespace VkLib.Core.Audio
 
         /// <summary>
         /// Get audios of user or society.
-        /// See also <see cref="http://vk.com/dev/audio.get"/>
+        /// See also <see cref="http://vk.ru/dev/audio.get"/>
         /// </summary>
         /// <param name="ownerId">Owner id. For society must be negative.</param>
         /// <param name="albumId">Album id</param>
@@ -93,7 +93,7 @@ namespace VkLib.Core.Audio
 
         /// <summary>
         /// Get albums of user or society.
-        /// See also <see cref="http://vk.com/dev/audio.getAlbums"/>
+        /// See also <see cref="http://vk.ru/dev/audio.getAlbums"/>
         /// </summary>
         /// <param name="ownerId">Owner id. For society must be negative.</param>
         /// <param name="count">Count</param>
@@ -150,7 +150,7 @@ namespace VkLib.Core.Audio
 
         /// <summary>
         /// Search audios.
-        /// See also <see cref="http://vk.com/dev/audio.search"/>
+        /// See also <see cref="http://vk.ru/dev/audio.search"/>
         /// </summary>
         /// <param name="query">Query</param>
         /// <param name="count">Count</param>
@@ -211,7 +211,7 @@ namespace VkLib.Core.Audio
 
         /// <summary>
         /// Add audio to current user or society.
-        /// See also <see cref="http://vk.com/dev/audio.add"/>
+        /// See also <see cref="http://vk.ru/dev/audio.add"/>
         /// </summary>
         /// <param name="audioId">Audio id</param>
         /// <param name="ownerId">Owner id</param>
@@ -250,7 +250,7 @@ namespace VkLib.Core.Audio
 
         /// <summary>
         /// Remove audio from current user or society.
-        /// See also <see cref="http://vk.com/dev/audio.delete"/>
+        /// See also <see cref="http://vk.ru/dev/audio.delete"/>
         /// </summary>
         /// <param name="audioId">Audio id</param>
         /// <param name="ownerId">Owner id</param>
@@ -277,7 +277,7 @@ namespace VkLib.Core.Audio
 
         /// <summary>
         /// Move audios to album.
-        /// See also <see cref="http://vk.com/dev/audio.moveToAlbum"/>
+        /// See also <see cref="http://vk.ru/dev/audio.moveToAlbum"/>
         /// </summary>
         /// <param name="albumId">Album id</param>
         /// <param name="audioIds">List of audios ids</param>
@@ -567,7 +567,7 @@ namespace VkLib.Core.Audio
         /// <returns></returns>
         public List<VkGenre> GetGenres()
         {
-            //http://vk.com/dev/audio_genres
+            //http://vk.ru/dev/audio_genres
 
             var genres = new List<VkGenre>();
             genres.Add(new VkGenre() { Id = 1, Title = "Rock" });
